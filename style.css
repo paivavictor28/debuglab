@@ -1,4 +1,4 @@
-/* --- Variáveis & Reset --- */
+/* --- 1. VARIÁVEIS E RESET --- */
 :root {
     --bg-dark: #0B0E14;
     --bg-card: #151921;
@@ -18,15 +18,18 @@
     box-sizing: border-box;
 }
 
+html,
 body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
     background-color: var(--bg-dark);
     color: var(--text-main);
     font-family: var(--font);
     line-height: 1.6;
-    overflow-x: hidden;
 }
 
-/* Fundo Estilo "Grid" */
+/* --- 2. FUNDO GRID E CONTAINERS --- */
 .bg-grid {
     position: fixed;
     top: 0;
@@ -48,19 +51,15 @@ body {
     padding: 0 2rem;
 }
 
-/* --- Header --- */
+/* --- 3. HEADER --- */
 header {
-    /* Aumentei o padding vertical para dar espaço à logo grande */
     padding: 1.5rem 0;
     position: sticky;
     top: 0;
     background: rgba(11, 14, 20, 0.95);
-    /* Um pouco mais escuro para garantir leitura */
     backdrop-filter: blur(12px);
     z-index: 100;
     border-bottom: 1px solid var(--border);
-    /* Garante que o header cresça conforme a logo */
-    height: auto;
     min-height: 100px;
 }
 
@@ -68,28 +67,14 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* ISSO é o que centraliza o menu verticalmente com a logo */
 }
 
-/* --- Logo Grande (200px) --- */
 .logo img {
     width: 200px;
-    /* O tamanho que você gostou */
     height: auto;
-    /* IMPORTANTE: Deixa a altura proporcional para não distorcer */
     display: block;
-    /* Remove espaços fantasmas abaixo da imagem */
     object-fit: contain;
 }
-
-/* --- Ajuste Mobile (Opcional, mas recomendado) --- */
-/* Em telas de celular, 200px pode ser muito grande. Aqui reduzimos um pouco só no mobile */
-@media (max-width: 768px) {
-    .logo img {
-        width: 150px;
-    }
-}
-
 
 nav {
     display: flex;
@@ -104,11 +89,12 @@ nav a {
     transition: 0.3s;
 }
 
-nav a:hover {
-    color: var(--text-main);
+nav a:hover,
+nav a.active {
+    color: var(--primary);
 }
 
-/* --- Buttons --- */
+/* --- 4. BOTÕES --- */
 .btn-primary {
     background: var(--primary);
     color: #000;
@@ -138,20 +124,27 @@ nav a:hover {
     transition: 0.3s;
 }
 
-.btn-secondary:hover {
-    border-color: var(--text-main);
-    background: rgba(255, 255, 255, 0.05);
-}
-
 .large {
     padding: 1rem 2rem;
     font-size: 1.1rem;
 }
 
-/* --- Hero --- */
+/* --- 5. HERO  --- */
 .hero {
     text-align: center;
     padding: 6rem 0;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin: 1.5rem 0;
+    line-height: 1.1;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .badge {
@@ -162,19 +155,7 @@ nav a:hover {
     font-size: 0.9rem;
     font-weight: 600;
     border: 1px solid rgba(0, 188, 212, 0.2);
-}
-
-.hero h1 {
-    font-size: 3.5rem;
-    margin: 1.5rem 0;
-    line-height: 1.1;
-    letter-spacing: -1px;
-}
-
-.gradient-text {
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
 
 .subtitle {
@@ -190,7 +171,7 @@ nav a:hover {
     gap: 1rem;
 }
 
-/* --- Marquee (Corrigido) --- */
+/* --- 6. MARQUEE (TECNOLOGIAS) --- */
 .marquee-wrapper {
     background: var(--bg-card);
     padding: 1.5rem 0;
@@ -198,17 +179,12 @@ nav a:hover {
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     white-space: nowrap;
-    position: relative;
 }
 
-/* O conteúdo deve ser largo o suficiente */
 .marquee-content {
     display: inline-flex;
-    /* Alterado de inline-block para flex para evitar gaps */
     gap: 4rem;
-    /* Espaço consistente entre itens */
     animation: scroll 30s linear infinite;
-    /* Animação mais suave */
 }
 
 .marquee-content span {
@@ -227,11 +203,9 @@ nav a:hover {
     100% {
         transform: translateX(-33.33%);
     }
-
-    /* Move apenas 1/3 pois temos 3 conjuntos */
 }
 
-/* --- Bento Grid --- */
+/* --- 7. BENTO GRID --- */
 .section {
     padding: 5rem 0;
 }
@@ -254,52 +228,25 @@ nav a:hover {
     border-radius: 16px;
     padding: 2rem;
     transition: 0.3s;
-    position: relative;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
 .bento-card:hover {
-    /* A borda fica Ciano */
     border-color: var(--primary);
-
-    /* O card sobe um pouquinho */
     transform: translateY(-5px);
-
-    /* AQUI ESTÁ O NEON: Uma sombra brilhante da mesma cor */
     box-shadow: 0 0 25px rgba(0, 188, 212, 0.5);
-}
-
-/* Card Grande (Ajuste do Bug) */
-.large-card {
-    grid-column: span 1;
-    grid-row: span 2;
-    background: linear-gradient(180deg, var(--bg-card) 0%, rgba(0, 188, 212, 0.05) 100%);
-    justify-content: space-between;
-    /* Garante que o código fique embaixo */
 }
 
 .wide-card {
     grid-column: span 2;
 }
 
-.card-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+.large-card {
+    grid-row: span 2;
+    justify-content: space-between;
 }
 
-.bento-card h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.3rem;
-}
-
-.bento-card p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
-
-/* Bloco de Código (Corrigido Visual) */
 .card-visual {
     margin-top: 2rem;
     background: #000;
@@ -308,20 +255,9 @@ nav a:hover {
     font-family: 'Courier New', monospace;
     font-size: 0.85rem;
     border-left: 3px solid var(--primary);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    /* Garante que não estoure */
-    overflow-x: auto;
-    /* Scroll se for muito longo */
 }
 
-.card-visual code {
-    display: block;
-    color: #f8f8f2;
-    line-height: 1.4;
-}
-
-/* --- Accordion --- */
+/* --- 8. ACORDEÃO --- */
 .accordion-wrapper {
     max-width: 800px;
     margin: 0 auto;
@@ -332,7 +268,6 @@ nav a:hover {
     border: 1px solid var(--border);
     margin-bottom: 1rem;
     border-radius: 12px;
-    overflow: hidden;
 }
 
 .accordion-header {
@@ -342,145 +277,21 @@ nav a:hover {
     border: none;
     color: var(--text-main);
     font-size: 1.1rem;
-    font-weight: 600;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     cursor: pointer;
-    font-family: var(--font);
-}
-
-.accordion-header:hover {
-    color: var(--primary);
 }
 
 .accordion-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
-    background: rgba(0, 0, 0, 0.2);
 }
 
-.accordion-content p {
-    padding: 1.5rem;
-    color: var(--text-muted);
-    border-top: 1px solid var(--border);
-}
-
-/* --- Footer Ajustado --- */
-footer {
-    background: #080a0f;
-    padding: 2rem 0 1.5rem 0;
-    border-top: 1px solid var(--border);
-    margin-top: 4rem;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
-    gap: 2rem;
-    align-items: start;
-}
-
-/* Nova classe para alinhar Texto e Ícone */
-.brand-row {
-    display: flex;
-    align-items: center;
-    /* Alinha verticalmente no centro */
-    gap: 12px;
-    /* Espaço entre o texto e o ícone */
-    margin-bottom: 0.5rem;
-}
-
-.footer-brand {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: white;
-    margin-bottom: 0;
-    /* Remove margem pois o gap já resolve */
-    line-height: 1;
-}
-
-/* Estilo do Ícone do LinkedIn */
-.social-icon img {
-    width: 20px;
-    /* Tamanho discreto e elegante */
-    height: auto;
-    display: block;
-    opacity: 0.8;
-    transition: 0.3s;
-}
-
-.social-icon img:hover {
-    opacity: 1;
-    transform: scale(1.1);
-    /* Um leve zoom ao passar o mouse */
-}
-
-.footer-desc {
-    color: #94a3b8;
-    font-size: 0.85rem;
-    max-width: 250px;
-}
-
-.footer-col h4 {
-    color: white;
-    margin-bottom: 0.8rem;
-    font-size: 1rem;
-}
-
-.footer-col ul {
-    list-style: none;
-}
-
-.footer-col ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-col ul li a {
-    color: #94A3B8;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: 0.3s;
-}
-
-.footer-col ul li a:hover {
-    color: var(--primary);
-}
-
-.copyright {
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 0.8rem;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 1.5rem;
-    }
-
-    /* Centraliza o conjunto logo+linkedin no mobile */
-    .brand-row {
-        justify-content: center;
-    }
-
-    .footer-desc {
-        margin: 0 auto;
-    }
-}
-
-/* --- PÁGINA DE CONTATO --- */
-
+/* --- 9. PÁGINA DE CONTATO (GLASSMORPHISM) --- */
 .contact-page {
     padding: 4rem 0;
     min-height: 80vh;
-    /* Garante que ocupe boa parte da tela */
     display: flex;
     align-items: center;
 }
@@ -488,69 +299,15 @@ footer {
 .contact-wrapper {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
-    /* Texto menor na esquerda, Form maior na direita */
     gap: 4rem;
-    align-items: start;
 }
 
-/* Lado Esquerdo: Textos */
-.contact-text h1 {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.1;
-}
-
-.contact-info-cards {
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.info-card {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 1rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: 0.3s;
-}
-
-.info-card:hover {
-    border-color: var(--primary);
-    background: rgba(0, 188, 212, 0.05);
-}
-
-.info-card .icon {
-    font-size: 1.5rem;
-}
-
-.info-card h4 {
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-.info-card p {
-    margin: 0;
-    font-weight: 600;
-    color: white;
-}
-
-
-/* --- Lado Direito: Formulário Glassmorphism --- */
 .glass-form-container {
     background: rgba(21, 25, 33, 0.7);
-    /* Fundo semi-transparente */
     backdrop-filter: blur(16px);
-    /* O efeito de vidro fosco */
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 2.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .form-grid {
@@ -561,6 +318,7 @@ footer {
 
 .input-group {
     margin-bottom: 1.5rem;
+    position: relative;
 }
 
 .input-group label {
@@ -568,10 +326,8 @@ footer {
     margin-bottom: 0.5rem;
     color: var(--text-muted);
     font-size: 0.9rem;
-    font-weight: 500;
 }
 
-/* Estilo dos Inputs e Selects */
 .input-group input,
 .input-group select,
 .input-group textarea {
@@ -581,120 +337,42 @@ footer {
     border: 1px solid var(--border);
     border-radius: 8px;
     color: white;
-    font-family: var(--font);
-    font-size: 1rem;
-    transition: 0.3s;
     outline: none;
 }
 
-/* Efeito Neon ao focar no campo */
+.input-group textarea {
+    resize: none;
+}
+
 .input-group input:focus,
 .input-group select:focus,
 .input-group textarea:focus {
     border-color: var(--primary);
     box-shadow: 0 0 10px rgba(0, 188, 212, 0.2);
-    background: rgba(0, 0, 0, 0.5);
 }
 
-/* Ajuste para o Select (Seta customizada é complexo, vamos simplificar) */
-.input-group select {
-    cursor: pointer;
-    appearance: none;
-    /* Remove a seta padrão feia do navegador */
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1em;
-}
-
-.full-width {
-    width: 100%;
-    margin-top: 1rem;
-}
-
-/* Mobile Contact */
-@media (max-width: 768px) {
-    .contact-wrapper {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-
-    .contact-text h1 {
-        font-size: 2.5rem;
-    }
-}
-
-/* --- CORREÇÕES FINAIS --- */
-
-/* 1. Afastar a tag "Vamos Conversar?" do título */
-.contact-text .badge {
-    display: inline-block;
-    /* Essencial para a margem funcionar */
-    margin-bottom: 1.5rem;
-    /* Era pouco, aumentei para dar respiro */
-}
-
-/* 2. Corrigir Contraste das Opções (Fundo preto, texto branco) */
-.input-group select option {
-    background-color: #0B0E14;
-    /* Cor de fundo escura sólida */
-    color: white;
-    padding: 10px;
-}
-
-/* 3. Bloquear o aumento da caixa de texto */
-.input-group textarea {
-    resize: none;
-    /* Remove aquele triângulo de arrastar */
-}
-
-/* Estilo do Contador de Caracteres (Fica embaixo da caixa) */
-.char-counter {
-    display: block;
-    text-align: right;
-    font-size: 0.8rem;
-    color: #64748B;
-    /* Cinza discreto */
-    margin-top: 0.5rem;
-    font-weight: 500;
-}
-
-/* --- ESTILOS DE VALIDAÇÃO (ERRO) --- */
-
-/* Esconde a mensagem por padrão */
-/* --- ESTILOS DE VALIDAÇÃO (ERRO) --- */
-
-/* Esconde a mensagem por padrão */
+/* --- 10. ESTILOS DE VALIDAÇÃO DE ERRO NO CONTATO --- */
 .error-msg {
     display: none;
     color: #ff5f56;
     font-size: 0.8rem;
-    margin-top: 5px;
     font-weight: 500;
+    margin-top: 8px;
+    clear: both;
 }
 
-/* Estado de Erro no Input, Select E AGORA NO TEXTAREA */
 .input-group.error input,
 .input-group.error select,
 .input-group.error textarea {
-    /* <--- ADICIONEI ISSO AQUI */
     border-color: #ff5f56 !important;
     box-shadow: 0 0 10px rgba(255, 95, 86, 0.4) !important;
-    /* Neon Vermelho */
     animation: shake 0.3s ease-in-out;
 }
 
-/* Mostra a mensagem quando o pai tem a classe .error */
 .input-group.error .error-msg {
     display: block;
 }
 
-/* Animação de erro */
 @keyframes shake {
 
     0%,
@@ -711,51 +389,124 @@ footer {
     }
 }
 
-/* --- CORREÇÃO FINAL V3 (INPUTS E TEXTAREA PERFEITOS) --- */
-
-/* --- AJUSTE DE PROXIMIDADE FINAL --- */
-
-/* 1. Regra Geral para mensagens de erro dos inputs comuns */
-.error-msg {
-    display: none;
-    color: #ff5f56;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-top: 8px; /* Mesma distância das labels superiores */
-    text-align: left;
-    clear: both;
-}
-
-.input-group.error .error-msg {
-    display: block;
-}
-
-/* 2. Regra do CONTADOR (Direita) */
+/* Ajuste específico para Contador e Erro da Mensagem ficarem na mesma linha */
 #charCount {
     float: right;
     font-size: 0.75rem;
-    margin-top: 8px; /* Alinhado com a label */
+    margin-top: 8px;
     color: #ffbd2e;
 }
 
-/* 3. Regra Específica para o ERRO DA MENSAGEM (Esquerda) */
-#mensagem ~ .error-msg {
+#mensagem~.error-msg {
     float: left;
     width: auto;
-    margin-top: 8px; /* Mesma altura do contador */
-    clear: none;     /* Permite a mesma linha */
+    margin-top: 8px;
+    clear: none;
 }
 
-/* 4. Fix para garantir que o container não colapse com floats */
 .input-group::after {
     content: "";
     display: table;
     clear: both;
 }
 
-/* --- CORREÇÃO DO SCROLL (ÂNCORAS) --- */
+/* --- 11. RODAPÉ (FOOTER) --- */
+footer {
+    background: #080a0f;
+    padding: 2rem 0 1.5rem 0;
+    border-top: 1px solid var(--border);
+}
 
-/* Aplica o recuo em todas as seções que têm um ID */
+.footer-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 2rem;
+}
+
+.brand-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.social-icon img {
+    width: 20px;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.social-icon img:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* --- 12. AJUSTE DE SCROLL (ÂNCORAS DO MENU) --- */
 section[id] {
-    scroll-margin-top: 120px; /* Ajuste esse valor se o header mudar de tamanho */
+    scroll-margin-top: 120px;
+}
+
+/* --- 13. RESPONSIVIDADE  --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    /* Header e Nav */
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .logo img {
+        width: 150px;
+    }
+
+    /* Hero e Bento */
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .bento-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .wide-card,
+    .large-card {
+        grid-column: span 1 !important;
+        grid-row: auto !important;
+    }
+
+    /* Contato Mobile */
+    .contact-wrapper {
+        grid-template-columns: 1fr !important;
+        gap: 2rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .glass-form-container {
+        padding: 1.5rem;
+    }
+
+    /* Footer Mobile */
+    .footer-content {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+    }
+
+    .brand-row {
+        justify-content: center;
+    }
+
+    .footer-desc {
+        margin: 0 auto;
+    }
 }
