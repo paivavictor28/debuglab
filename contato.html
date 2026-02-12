@@ -29,105 +29,81 @@
     </header>
 
     <section class="contact-page">
-        <div class="container contact-wrapper">
+        <div class="contact-page">
+            <div class="container">
+                <div class="contact-wrapper">
 
-            <div class="contact-text">
-                <h1>Encontre o <br><span class="gradient-text">Talento Certo.</span></h1>
-                <p class="subtitle">Preencha o formulário e nossa equipe técnica entrará em contato em até 24h para
-                    entender sua stack e desafio.</p>
+                    <div class="contact-text">
+                        <h1>Encontre o <br> <span class="gradient-text">Talento Certo.</span></h1>
 
-                <div class="contact-info-cards">
-                    <div class="info-card">
-                        <span class="icon">📧</span>
-                        <div>
-                            <h4>E-mail</h4>
-                            <p>contato@debuglab.com</p>
+                        <p
+                            style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 2.5rem; max-width: 450px; line-height: 1.6;">
+                            Preencha o formulário e nossa equipe técnica entrará em contato em até 24h para entender sua
+                            stack e desafio.
+                        </p>
+
+                        <div class="contact-info-cards">
+                            <div class="info-card">
+                                <div class="icon">📧</div>
+                                <div class="info-text">
+                                    <h4>E-mail</h4>
+                                    <a href="mailto:contato@debuglab.com">contato@debuglab.com</a>
+                                </div>
+                            </div>
+
+                            <div class="info-card">
+                                <div class="icon">📱</div>
+                                <div class="info-text">
+                                    <h4>WhatsApp</h4>
+                                    <a href="https://wa.me/5561999999999" target="_blank">
+                                        (61) 99999-9999
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="info-card">
-                        <span class="icon">📱</span>
-                        <div>
-                            <h4>WhatsApp</h4>
-                            <p>(61) 99999-9999</p>
-                        </div>
+
+                    <div class="glass-form-container">
+                        <form id="contactForm">
+                            <div class="form-grid">
+                                <div class="input-group">
+                                    <label for="nome">Seu Nome</label>
+                                    <input type="text" id="nome" placeholder="Ex: Victor Paiva">
+                                    <span class="error-msg"></span>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="empresa">Nome da Empresa</label>
+                                    <input type="text" id="empresa" placeholder="Ex: Tech Solutions">
+                                    <span class="error-msg"></span>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="email">E-mail Corporativo</label>
+                                    <input type="email" id="email" placeholder="nome@empresa.com">
+                                    <span class="error-msg"></span>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="telefone">Telefone / WhatsApp</label>
+                                    <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+                                    <span class="error-msg"></span>
+                                </div>
+                            </div>
+
+                            <div class="input-group full-width">
+                                <label for="mensagem">Mensagem / Detalhes da Vaga</label>
+                                <textarea id="mensagem" rows="5" maxlength="1000"
+                                    placeholder="Conte um pouco sobre a stack técnica ou o desafio..."></textarea>
+
+                                <div id="charCount" class="char-counter">0 / 1000</div>
+                                <span class="error-msg">*Mínimo de 200 caracteres</span>
+                            </div>
+
+                            <button type="submit" class="btn-primary full-width">Solicitar Contato</button>
+                        </form>
                     </div>
                 </div>
-            </div>
-
-            <div class="glass-form-container">
-                <form id="contactForm" novalidate>
-
-                    <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
-
-                    <div class="form-grid">
-                        <div class="input-group">
-                            <label for="nome">Seu Nome</label>
-                            <input type="text" id="nome" name="nome" placeholder="Ex: Victor Paiva" required>
-                            <span class="error-msg">*Campo obrigatório</span>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="empresa">Nome da Empresa</label>
-                            <input type="text" id="empresa" name="empresa" placeholder="Ex: Tech Solutions" required>
-                            <span class="error-msg">*Campo obrigatório</span>
-                        </div>
-                    </div>
-
-                    <div class="form-grid">
-                        <div class="input-group">
-                            <label for="email">E-mail Corporativo</label>
-                            <input type="email" id="email" name="email" placeholder="nome@empresa.com" required>
-                            <span class="error-msg">*Campo obrigatório</span>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="telefone">Telefone / WhatsApp</label>
-                            <input type="tel" id="telefone" name="telefone" maxlength="15" placeholder="(00) 00000-0000"
-                                required>
-                            <span class="error-msg">*Campo obrigatório</span>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="profissional">Qual perfil você busca?</label>
-                        <div class="select-wrapper">
-                            <select id="profissional" name="profissional" required>
-                                <option value="" disabled selected>Selecione uma opção...</option>
-                                <option value="qa">QA / Testes (Automation)</option>
-                                <option value="backend">Dev Back-End</option>
-                                <option value="frontend">Dev Front-End</option>
-                                <option value="fullstack">Dev Full Stack</option>
-                                <option value="dados">Engenharia de Dados</option>
-                                <option value="outro">Outro / Consultoria</option>
-                            </select>
-                        </div>
-                        <span class="error-msg">*Campo obrigatório</span>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="senioridade">Senioridade Desejada (Opcional)</label>
-                        <div class="select-wrapper">
-                            <select id="senioridade" name="senioridade">
-                                <option value="" disabled selected>Nível de experiência...</option>
-                                <option value="junior">Júnior (1-2 anos)</option>
-                                <option value="pleno">Pleno (3-5 anos)</option>
-                                <option value="senior">Sênior (5+ anos)</option>
-                                <option value="especialista">Especialista / Lead</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="mensagem">Mensagem / Detalhes da Vaga</label>
-                        <textarea id="mensagem" ...></textarea>
-
-                        <div id="charCount" class="char-counter">0 / 1000</div>
-
-                        <span class="error-msg">*Mínimo de 200 caracteres</span>
-                    </div>
-
-                    <button type="submit" class="btn-primary full-width">Solicitar Contato</button>
-                </form>
             </div>
         </div>
     </section>
@@ -136,7 +112,7 @@
         <div class="container footer-content">
             <div class="footer-col">
                 <div class="brand-row">
-                    <div class="footer-brand">Debug Lab.</div>
+                    <div class="footer-brand">Debug Lab</div>
                     <a href="https://www.linkedin.com/company/debuglabhunting" target="_blank" class="social-icon">
                         <img src="pictures/linkedin.png" alt="LinkedIn">
                     </a>

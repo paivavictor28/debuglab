@@ -40,16 +40,30 @@
     </section>
 
     <div class="marquee-wrapper">
-        <div class="marquee-content">
-            <span>Cypress</span> <span>Playwright</span> <span>Selenium</span> <span>Python</span>
-            <span>Java</span> <span>TypeScript</span> <span>K6</span> <span>Appium</span>
-            <span>JavaScript</span> <span>SQL</span> <span>Docker</span> <span>CI/CD</span>
-            <span>Cypress</span> <span>Playwright</span> <span>Selenium</span> <span>Python</span>
-            <span>Java</span> <span>TypeScript</span> <span>K6</span> <span>Appium</span>
-            <span>JavaScript</span> <span>SQL</span> <span>Docker</span> <span>CI/CD</span>
-            <span>Cypress</span> <span>Playwright</span> <span>Selenium</span> <span>Python</span>
-            <span>Java</span> <span>TypeScript</span> <span>K6</span> <span>Appium</span>
-            <span>JavaScript</span> <span>SQL</span> <span>Docker</span> <span>CI/CD</span>
+        <div class="marquee-track">
+            <span>React</span>
+            <span>Node.js</span>
+            <span class="qa-stack">Cypress</span>
+            <span>Python</span>
+            <span>AWS</span>
+            <span class="qa-stack">Selenium</span>
+            <span>Docker</span>
+            <span>Kubernetes</span>
+            <span class="qa-stack">Playwright</span>
+            <span>Javascript</span>
+            <span class="qa-stack">Appium</span>
+
+            <span>React</span>
+            <span>Node.js</span>
+            <span class="qa-stack">Cypress</span>
+            <span>Python</span>
+            <span>AWS</span>
+            <span class="qa-stack">Selenium</span>
+            <span>Docker</span>
+            <span>Kubernetes</span>
+            <span class="qa-stack">Playwright</span>
+            <span>Javascript</span>
+            <span class="qa-stack">Appium</span>
         </div>
     </div>
 
@@ -178,7 +192,26 @@
         </div>
     </footer>
 
+    </footer>
+
+    <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">
+        ↑
+    </button>
+
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        document.onkeydown = function (e) {
+            if (e.keyCode == 123) { return false; }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+        }
+    </script>
 </body>
+</body>
+
+</html>
 
 </html>
