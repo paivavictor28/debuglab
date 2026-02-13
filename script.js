@@ -1,13 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     /* ============================================================
-       1. HELPER FUNCTIONS & VALIDATORS
+       1. HELPER FUNCTIONS (Globais)
     ============================================================ */
     const showError = (input, message) => {
         let inputGroup = input.parentElement;
+        // Ajuste para encontrar o pai correto em campos complexos
         if (inputGroup.classList.contains('phone-wrapper-combo') || inputGroup.classList.contains('file-upload-wrapper')) {
             inputGroup = inputGroup.parentElement;
         }
+
         inputGroup.classList.add('error');
         const errorDisplay = inputGroup.querySelector('.error-msg');
         if (errorDisplay) {
@@ -21,35 +23,41 @@ document.addEventListener('DOMContentLoaded', () => {
         if (inputGroup.classList.contains('phone-wrapper-combo') || inputGroup.classList.contains('file-upload-wrapper')) {
             inputGroup = inputGroup.parentElement;
         }
+
         inputGroup.classList.remove('error');
         const errorDisplay = inputGroup.querySelector('.error-msg');
         if (errorDisplay) errorDisplay.style.display = 'none';
     };
 
+    // VALIDADORES
     const validators = {
         email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()),
         nome: (value) => value.trim().split(' ').length >= 2,
+        // LinkedIn: Valida se tem linkedin.com e tamanho mínimo
         linkedin: (value) => value.toLowerCase().includes("linkedin.com") && value.trim().length > 15,
         mensagem: (value) => value.trim().length >= 20,
         notEmpty: (value) => value.trim() !== "",
+        // PDF: Verifica se tem arquivo e se termina com .pdf
         pdf: (fileInput) => fileInput.files.length > 0 && fileInput.files[0].name.toLowerCase().endsWith('.pdf')
     };
 
+    // Validação de Telefone com DDI
     const validatePhone = (value, ddi) => {
         const clean = value.replace(/\D/g, '');
-        if (ddi === '+55') return clean.length >= 10;
-        if (ddi === '+351') return clean.length === 9;
-        return clean.length > 5;
+        if (ddi === '+55') return clean.length >= 10; // Brasil
+        if (ddi === '+351') return clean.length === 9; // Portugal
+        return clean.length > 5; // Outros/Fallback
     };
 
     /* ============================================================
-       2. MÁSCARA DINÂMICA
+       2. MÁSCARA DINÂMICA (DDI)
     ============================================================ */
-    const ddiSelect = document.getElementById('ddi');
+    const ddiSelect = document.getElementById('ddi'); // Pode não existir no form de trabalho
     const telInput = document.getElementById('telefone');
 
     if (telInput) {
         telInput.addEventListener('input', function (e) {
+            // Se não tiver select de DDI (Trabalhe Conosco), assume +55
             const ddi = ddiSelect ? ddiSelect.value : '+55';
             let value = e.target.value.replace(/\D/g, '');
 
@@ -73,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ============================================================
-       3. VALIDAÇÃO REAL-TIME
+       3. VALIDAÇÃO REAL-TIME (Ao digitar)
     ============================================================ */
     const inputs = document.querySelectorAll('input, select, textarea');
     inputs.forEach(input => {
@@ -81,12 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         input.addEventListener(eventType, function () {
             let inputGroup = this.parentElement;
-            if (this.type === 'file' || this.id === 'telefone') {
-                if (inputGroup.classList.contains('file-upload-wrapper') || inputGroup.classList.contains('phone-wrapper-combo')) {
-                    inputGroup = inputGroup.parentElement;
-                }
+            // Ajuste de hierarquia para File e Combo Phone
+            if (this.type === 'file' || this.parentElement.classList.contains('phone-wrapper-combo')) {
+                inputGroup = inputGroup.parentElement;
             }
 
+            // Só valida se já estiver com erro (UX: não incomodar antes da hora)
             if (inputGroup.classList.contains('error')) {
                 let valid = false;
                 switch (this.id) {
@@ -97,6 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 'linkedin': valid = validators.linkedin(this.value); break;
                     case 'perfil': valid = validators.notEmpty(this.value); break;
                     case 'cv': valid = validators.pdf(this); break;
+                    case 'telefone':
+                        const ddiNow = ddiSelect ? ddiSelect.value : '+55';
+                        valid = validatePhone(this.value, ddiNow);
+                        break;
                     default: valid = true;
                 }
                 if (valid) clearError(this);
@@ -105,9 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ============================================================
-           4. ENVIO DE FORMULÁRIOS (AJAX COM ARQUIVO FIX)
+           4. LÓGICA DE ENVIO (AJAX + SUCCESS FIXO)
         ============================================================ */
-
     const handleFormSubmit = (formId, inputsId, msgId, isContact = false) => {
         const form = document.getElementById(formId);
         if (!form) return;
@@ -118,19 +129,19 @@ document.addEventListener('DOMContentLoaded', () => {
             let isValid = true;
             let firstInvalidInput = null;
 
-            // --- VALIDAÇÕES (Mantive igual, só resumindo aqui) ---
+            // --- COLETA E VALIDAÇÃO ---
             const nome = form.querySelector('#nome');
             const email = form.querySelector('#email');
             const telefone = form.querySelector('#telefone');
 
-            // Validações Básicas
+            // Validações Comuns
             if (!validators.nome(nome.value)) { showError(nome, "*Digite nome e sobrenome"); isValid = false; if (!firstInvalidInput) firstInvalidInput = nome; }
             if (!validators.email(email.value)) { showError(email, "*E-mail inválido"); isValid = false; if (!firstInvalidInput) firstInvalidInput = email; }
 
-            // Validação Telefone e DDI
-            const ddiElement = form.querySelector('.ddi-select') || document.getElementById('ddi'); // Busca genérica
-            const ddi = ddiElement ? ddiElement.value : '+55';
-            if (!validatePhone(telefone.value, ddi)) { showError(telefone, "*Telefone incompleto"); isValid = false; if (!firstInvalidInput) firstInvalidInput = telefone; }
+            // Telefone
+            const ddiEl = form.querySelector('.ddi-select') || document.getElementById('ddi');
+            const ddiVal = ddiEl ? ddiEl.value : '+55';
+            if (!validatePhone(telefone.value, ddiVal)) { showError(telefone, "*Telefone incompleto"); isValid = false; if (!firstInvalidInput) firstInvalidInput = telefone; }
 
             // Validações Específicas
             if (isContact) {
@@ -152,25 +163,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // --- PREPARAÇÃO PARA ENVIO ---
+            // --- ENVIO ---
 
-            // 1. Preencher Data/Hora Oculta (Formato PT-BR)
+            // 1. Data Oculta
             const hiddenDate = form.querySelector('input[name="Data_Envio"]');
             if (hiddenDate) {
-                const agora = new Date();
-                hiddenDate.value = agora.toLocaleString('pt-BR');
+                hiddenDate.value = new Date().toLocaleString('pt-BR');
             }
 
             // 2. Loading State
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerText;
-            submitBtn.classList.add('btn-loading'); // Ativa animação CSS
+
+            submitBtn.classList.add('btn-loading');
             submitBtn.disabled = true;
 
-            // 3. Montar FormData (CRUCIAL PARA O ARQUIVO IR)
+            // 3. FormData (Obrigatório para arquivos e dados complexos)
             const formData = new FormData(form);
 
-            // 4. Envio Fetch (Sem headers manuais para não quebrar o upload)
+            // 4. Fetch
             fetch("https://formsubmit.co/ajax/cazuza.paiva@gmail.com", {
                 method: "POST",
                 body: formData
@@ -181,30 +192,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     const inputsDiv = document.getElementById(inputsId);
                     const msgDiv = document.getElementById(msgId);
 
-                    inputsDiv.style.display = 'none';
-                    msgDiv.style.display = 'block';
-
-                    // Se for Contato, reseta depois de 5s. Se for Trabalho, FICA PARA SEMPRE.
-                    if (isContact) {
-                        setTimeout(() => {
-                            msgDiv.style.display = 'none';
-                            inputsDiv.style.display = 'block';
-                            form.reset();
-                            const charCount = document.getElementById('charCount');
-                            if (charCount) charCount.textContent = "0 / 1000";
-
-                            submitBtn.classList.remove('btn-loading');
-                            submitBtn.innerText = originalBtnText;
-                            submitBtn.disabled = false;
-                        }, 5000); // 5 segundos
-                    } else {
-                        // TRABALHE CONOSCO: Não faz nada, deixa a mensagem lá.
-                        // O usuário precisa dar F5 ou clicar no botão "Enviar Outro" que pus no HTML
+                    if (inputsDiv && msgDiv) {
+                        inputsDiv.style.display = 'none'; // Some o formulário
+                        msgDiv.style.display = 'block';   // Mostra a mensagem
                     }
+
+                    // Remove Loading (só por limpeza, pois o botão já sumiu junto com o form)
+                    submitBtn.classList.remove('btn-loading');
+                    submitBtn.innerText = originalBtnText;
+
+                    // IMPORTANTE: NÃO HÁ MAIS SETTIMEOUT AQUI.
+                    // A mensagem fica fixa até o usuário dar F5.
                 })
                 .catch(error => {
-                    console.error("Erro no envio:", error);
-                    alert("Ocorreu um erro ao enviar o currículo. Tente novamente.");
+                    console.error("Erro:", error);
+                    alert("Ocorreu um erro no envio. Verifique sua conexão.");
+
+                    // Erro: Destrava para tentar de novo
                     submitBtn.classList.remove('btn-loading');
                     submitBtn.innerText = originalBtnText;
                     submitBtn.disabled = false;
@@ -212,14 +216,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Inicializa
-    handleFormSubmit('contactForm', 'contactFormInputs', 'contactSuccessMsg', true);
-    handleFormSubmit('workForm', 'workFormInputs', 'workSuccessMsg', false);
-
     /* ============================================================
-       5. EXTRAS
+       5. EXTRAS (File Name, Accordion, Modais, Scroll)
     ============================================================ */
-    // Input File Name
+
+    // Nome do Arquivo no Input File
     const fileInput = document.getElementById('cv');
     const fileNameDisplay = document.getElementById('fileName');
     if (fileInput && fileNameDisplay) {
@@ -227,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.files && this.files.length > 0) {
                 fileNameDisplay.textContent = this.files[0].name;
                 fileNameDisplay.style.color = "#ffffff";
-                // Tenta limpar erro
+                // Limpa erro se for PDF
                 if (validators.pdf(this)) clearError(this);
             } else {
                 fileNameDisplay.textContent = "Clique para selecionar arquivo PDF...";
@@ -236,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Contador de Caracteres
+    // Contador de Caracteres (Mensagem)
     const msgInput = document.getElementById('mensagem');
     const charCountDisplay = document.getElementById('charCount');
     if (msgInput && charCountDisplay) {
@@ -252,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Accordion & Scroll
+    // Acordeão
     document.querySelectorAll(".accordion-header").forEach(header => {
         header.addEventListener("click", function () {
             this.classList.toggle("active");
@@ -262,6 +263,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Modais (Lógica Unificada)
+    const openModal = (modal) => {
+        if (modal) {
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+    };
+    const closeModal = (modal) => {
+        if (modal) {
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = 'none', 300);
+            document.body.style.overflow = 'auto';
+        }
+    };
+
+    // Botões que abrem modais
+    const bindModal = (btnId, modalId) => {
+        const btn = document.getElementById(btnId);
+        const modal = document.getElementById(modalId);
+        if (btn && modal) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal(modal);
+            });
+        }
+    };
+
+    bindModal('btnTermos', 'modalTermos');
+    bindModal('btnPrivacidade', 'modalPrivacidade');
+    bindModal('btnSobreNav', 'modalSobre');
+    bindModal('btnSobreFooter', 'modalSobre');
+
+    // Fechar Modais
+    document.querySelectorAll('.modal-close').forEach(btn => {
+        btn.addEventListener('click', () => closeModal(document.getElementById(btn.dataset.close)));
+    });
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay')) closeModal(e.target);
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") {
+            const activeModal = document.querySelector('.modal-overlay.active');
+            if (activeModal) closeModal(activeModal);
+        }
+    });
+
+    // Voltar ao Topo
     const backToTopBtn = document.getElementById('backToTop');
     if (backToTopBtn) {
         window.addEventListener('scroll', () => {
@@ -270,116 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
+
+    // Scroll Fix (F5)
+    if (history.scrollRestoration) history.scrollRestoration = 'manual';
+    else window.onbeforeunload = function () { window.scrollTo(0, 0); }
+
 });
-
-/* ============================================================
-       9. LÓGICA DOS MODAIS (Legal / LGPD / Sobre)
-    ============================================================ */
-// Mapeamento dos Modais
-const modalTermos = document.getElementById('modalTermos');
-const modalPrivacidade = document.getElementById('modalPrivacidade');
-const modalSobre = document.getElementById('modalSobre'); // NOVO
-
-// Mapeamento dos Botões (Triggers)
-const btnTermos = document.getElementById('btnTermos');
-const btnPrivacidade = document.getElementById('btnPrivacidade');
-
-// Botões do Sobre (Header e Footer)
-const btnSobreNav = document.getElementById('btnSobreNav');     // NOVO
-const btnSobreFooter = document.getElementById('btnSobreFooter'); // NOVO
-
-// Botões de fechar (X)
-const closeButtons = document.querySelectorAll('.modal-close');
-
-// Função para abrir
-const openModal = (modal) => {
-    if (modal) {
-        modal.style.display = 'flex';
-        setTimeout(() => {
-            modal.classList.add('active');
-        }, 10);
-        document.body.style.overflow = 'hidden';
-    }
-};
-
-// Função para fechar
-const closeModal = (modal) => {
-    if (modal) {
-        modal.classList.remove('active');
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 300);
-        document.body.style.overflow = 'auto';
-    }
-};
-
-// EVENTOS DE CLIQUE
-
-// 1. Termos e Privacidade
-if (btnTermos) {
-    btnTermos.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal(modalTermos);
-    });
-}
-
-if (btnPrivacidade) {
-    btnPrivacidade.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal(modalPrivacidade);
-    });
-}
-
-// 2. Sobre Nós (Header) - NOVO
-if (btnSobreNav) {
-    btnSobreNav.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal(modalSobre);
-    });
-}
-
-// 3. Sobre Nós (Footer) - NOVO
-if (btnSobreFooter) {
-    btnSobreFooter.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal(modalSobre);
-    });
-}
-
-// Fechar ao clicar no X
-closeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const modalId = btn.getAttribute('data-close');
-        const modal = document.getElementById(modalId);
-        closeModal(modal);
-    });
-});
-
-// Fechar ao clicar fora
-window.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal-overlay')) {
-        closeModal(e.target);
-    }
-});
-
-// Fechar com ESC
-document.addEventListener('keydown', (e) => {
-    if (e.key === "Escape") {
-        const activeModal = document.querySelector('.modal-overlay.active');
-        if (activeModal) closeModal(activeModal);
-    }
-});
-
-const workForm = document.getElementById('workForm');
-const btnSubmit = document.getElementById('btnSubmitWork');
-
-if (workForm) {
-    workForm.addEventListener('submit', function () {
-        // Ativa o feedback visual de carregamento
-        btnSubmit.classList.add('btn-loading');
-        btnSubmit.innerText = "Enviando...";
-
-        // O formulário seguirá o envio normal para o FormSubmit
-    });
-}
-
