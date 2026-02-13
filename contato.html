@@ -22,94 +22,113 @@
             </div>
             <nav>
                 <a href="index.html#diferenciais">Diferenciais</a>
-                <a href="index.html#metodologia">Sobre</a>
-                <a href="#" class="btn-primary active">Fale Conosco</a>
+                <a href="#" id="btnSobreNav">Sobre</a>
+
+                <a href="contato.html" class="btn-primary">Fale Conosco</a>
             </nav>
         </div>
     </header>
 
     <section class="contact-page">
-        <div class="contact-page">
-            <div class="container">
-                <div class="contact-wrapper">
+        <div class="container">
+            <div class="contact-wrapper">
 
-                    <div class="contact-text">
-                        <h1>Encontre o <br> <span class="gradient-text">Talento Certo.</span></h1>
+                <div class="contact-text">
+                    <h1 data-lang="contact_title_page">Encontre o <br> <span class="gradient-text">Talento Certo.</span>
+                    </h1>
 
-                        <p
-                            style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 2.5rem; max-width: 450px; line-height: 1.6;">
-                            Preencha o formulário e nossa equipe técnica entrará em contato em até 24h para entender sua
-                            stack e desafio.
-                        </p>
+                    <p data-lang="contact_sub_page"
+                        style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 2.5rem; max-width: 450px; line-height: 1.6;">
+                        Preencha o formulário e nossa equipe técnica entrará em contato em até 24h para entender sua
+                        stack e desafio.
+                    </p>
 
-                        <div class="contact-info-cards">
-                            <div class="info-card">
-                                <div class="icon">📧</div>
-                                <div class="info-text">
-                                    <h4>E-mail</h4>
-                                    <a href="mailto:contato@debuglab.com">contato@debuglab.com</a>
-                                </div>
+                    <div class="contact-info-cards">
+                        <div class="info-card">
+                            <div class="icon">📧</div>
+                            <div class="info-text">
+                                <h4 data-lang="label_email">E-mail</h4>
+                                <a href="mailto:contato@debuglab.com">contato@debuglab.com</a>
                             </div>
+                        </div>
 
-                            <div class="info-card">
-                                <div class="icon">📱</div>
-                                <div class="info-text">
-                                    <h4>WhatsApp</h4>
-                                    <a href="https://wa.me/5561999999999" target="_blank">
-                                        (61) 99999-9999
-                                    </a>
-                                </div>
+                        <div class="info-card">
+                            <div class="icon">📱</div>
+                            <div class="info-text">
+                                <h4 data-lang="label_whatsapp">WhatsApp</h4>
+                                <a href="https://wa.me/5561999999999" target="_blank">
+                                    +55 (61) 99999-9999
+                                </a>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="glass-form-container">
-                        <form id="contactForm">
+                <div class="glass-form-container">
+                    <form id="contactForm" action="https://formsubmit.co/cazuza.paiva@gmail.com" method="POST"
+                        novalidate>
+
+                        <input type="hidden" name="_subject" value="Novo Contato - Site Debug Lab">
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <div id="contactFormInputs">
                             <div class="form-grid">
                                 <div class="input-group">
                                     <label for="nome">Seu Nome</label>
-                                    <input type="text" id="nome" placeholder="Ex: José Pereira">
+                                    <input type="text" name="name" id="nome" placeholder="Seu Nome">
                                     <span class="error-msg"></span>
                                 </div>
-
                                 <div class="input-group">
                                     <label for="empresa">Nome da Empresa</label>
-                                    <input type="text" id="empresa" placeholder="Ex: Tech Solutions">
+                                    <input type="text" name="company" id="empresa" placeholder="Tech Solutions">
                                     <span class="error-msg"></span>
                                 </div>
+                            </div>
 
-                                <div class="input-group">
-                                    <label for="email">E-mail Corporativo</label>
-                                    <input type="email" id="email" placeholder="nome@empresa.com">
-                                    <span class="error-msg"></span>
-                                </div>
+                            <div class="input-group full-width" style="margin-top: 1.5rem;">
+                                <label for="email">E-mail Corporativo</label>
+                                <input type="email" name="email" id="email" placeholder="nome@empresa.com">
+                                <span class="error-msg"></span>
+                            </div>
 
-                                <div class="input-group">
-                                    <label for="telefone">Telefone / WhatsApp</label>
-                                    <input type="tel" id="telefone" placeholder="(00) 00000-0000">
-                                    <span class="error-msg"></span>
+                            <div class="input-group full-width">
+                                <label for="telefone">Telefone / WhatsApp</label>
+                                <div class="phone-wrapper-combo">
+                                    <select id="ddi" name="ddi" class="ddi-select">
+                                        <option value="+55">+55</option>
+                                        <option value="+351">+351</option>
+                                    </select>
+                                    <input type="tel" name="phone" id="telefone" placeholder="(00) 00000-0000">
                                 </div>
+                                <span class="error-msg"></span>
                             </div>
 
                             <div class="input-group full-width">
                                 <label for="mensagem">Mensagem / Detalhes da Vaga</label>
-                                <textarea id="mensagem" rows="5" maxlength="1000"
+                                <textarea id="mensagem" name="message" rows="5" maxlength="1000"
                                     placeholder="Conte um pouco sobre a stack técnica ou o desafio..."></textarea>
-
                                 <div id="charCount" class="char-counter">0 / 1000</div>
                                 <span class="error-msg">*Mínimo de 20 caracteres</span>
                             </div>
 
-                            <button type="submit" class="btn-primary full-width">Solicitar Contato</button>
-                        </form>
-                    </div>
+                            <button type="submit" class="btn-primary full-width" id="btnSubmitContact">Solicitar
+                                Contato</button>
+                        </div>
+
+                        <div id="contactSuccessMsg" class="success-message-box">
+                            <h3>Mensagem enviada! </h3>
+                            <p>Aguarde nosso retorno. Obrigado!</p>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer id="contato-footer">
+    <footer>
         <div class="container footer-content">
+
             <div class="footer-col">
                 <div class="brand-row">
                     <div class="footer-brand">Debug Lab</div>
@@ -119,25 +138,132 @@
                 </div>
                 <p class="footer-desc">Recrutamento técnico de alta precisão.</p>
             </div>
+
+            <div class="footer-col">
+                <h4>Empresa</h4>
+                <ul>
+                    <li><a href="trabalhe-conosco.html">Trabalhe Conosco</a></li>
+                    <li><a href="#" id="btnSobreFooter">Sobre Nós</a></li>
+                </ul>
+            </div>
+
             <div class="footer-col">
                 <h4>Contato</h4>
                 <ul class="contact-list">
                     <li><a href="mailto:contato@debuglab.com">contato@debuglab.com</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
                 <h4>Legal</h4>
                 <ul>
-                    <li><a href="#">Termos de Uso</a></li>
-                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#" id="btnTermos">Termos de Uso</a></li>
+                    <li><a href="#" id="btnPrivacidade">Política de Privacidade</a></li>
                 </ul>
             </div>
         </div>
+
         <div class="copyright">
             &copy; 2026 Debug Lab Consultoria. Todos os direitos reservados.
         </div>
     </footer>
 
+    <div id="modalSobre" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Sobre a Debug Lab 🐞</h3>
+                <button class="modal-close" data-close="modalSobre">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>Quem Somos</h4>
+                <p>A Debug Lab nasceu de uma frustração comum: recrutadores que não entendem a diferença entre Java e
+                    JavaScript.</p>
+                <p>Fundada por especialistas em <strong>Quality Assurance (QA)</strong>, nossa missão é eliminar o ruído
+                    do processo seletivo, conectando empresas a talentos validados tecnicamente.</p>
+
+                <h4>Nossa Metodologia</h4>
+                <ul>
+                    <li><strong>Triagem Técnica Real:</strong> Aplicamos testes de código e lógica antes do candidato
+                        chegar à sua mesa.</li>
+                    <li><strong>Foco em Retenção:</strong> Não olhamos apenas para a stack, mas para o fit cultural e
+                        objetivos de carreira.</li>
+                    <li><strong>Agilidade:</strong> Processos otimizados para fechar vagas críticas em tempo recorde.
+                    </li>
+                </ul>
+
+                <h4>Por que "Debug"?</h4>
+                <p>Porque o recrutamento tradicional tem bugs. Nós corrigimos.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalTermos" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Termos de Uso</h3>
+                <button class="modal-close" data-close="modalTermos">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Última atualização: Fevereiro de 2026</strong></p>
+                <p>Bem-vindo à Debug Lab. Ao acessar nosso site e utilizar nossos serviços de recrutamento, você
+                    concorda com os termos abaixo:</p>
+
+                <h4>1. Do Serviço</h4>
+                <p>A Debug Lab atua como intermediária entre candidatos (profissionais de tecnologia) e empresas
+                    contratantes. Não garantimos a contratação, mas nos comprometemos a apresentar seu perfil para vagas
+                    compatíveis.</p>
+
+                <h4>2. Das Responsabilidades do Candidato</h4>
+                <p>Você declara que todas as informações fornecidas em seu currículo e formulários são verdadeiras e
+                    atualizadas. A Debug Lab não se responsabiliza por dados incorretos fornecidos pelos candidatos.</p>
+
+                <h4>3. Propriedade Intelectual</h4>
+                <p>Todo o conteúdo deste site (textos, logotipos, design) é propriedade da Debug Lab e não pode ser
+                    reproduzido sem autorização.</p>
+
+                <h4>4. Alterações</h4>
+                <p>Podemos alterar estes termos a qualquer momento. O uso contínuo do serviço implica na aceitação das
+                    novas regras.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalPrivacidade" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Política de Privacidade & LGPD</h3>
+                <button class="modal-close" data-close="modalPrivacidade">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>A Debug Lab leva sua privacidade a sério. Em conformidade com a Lei Geral de Proteção de Dados
+                    (LGPD), explicamos como tratamos seus dados:</p>
+
+                <h4>1. Dados Coletados</h4>
+                <p>Coletamos nome, e-mail, telefone, link do LinkedIn e currículo (PDF) exclusivamente para fins de
+                    recrutamento e seleção.</p>
+
+                <h4>2. Finalidade</h4>
+                <p>Seus dados serão usados para:</p>
+                <ul>
+                    <li>Avaliação técnica e comportamental.</li>
+                    <li>Contato para agendamento de entrevistas.</li>
+                    <li>Envio para empresas parceiras com vagas compatíveis.</li>
+                </ul>
+
+                <h4>3. Armazenamento</h4>
+                <p>Seus dados ficarão armazenados em nosso banco de talentos por até <strong>12 meses</strong>. Após
+                    esse período, poderemos entrar em contato para atualização ou realizar a exclusão automática.</p>
+
+                <h4>4. Seus Direitos</h4>
+                <p>Você pode solicitar a qualquer momento a exclusão, alteração ou cópia dos seus dados enviando um
+                    e-mail para <strong>contato@debuglab.com</strong>.</p>
+
+                <h4>5. Segurança</h4>
+                <p>Utilizamos protocolos de segurança padrão para proteger seus arquivos e informações contra acesso não
+                    autorizado.</p>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 
