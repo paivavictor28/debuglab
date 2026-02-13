@@ -170,6 +170,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const formData = new FormData(form);
 
+            // --- AQUI ESTÁ A MÁGICA ---
+            // Injeta a data direto no pacote, garantindo que chegue
+            const agora = new Date();
+            const dataFormatada = agora.toLocaleDateString('pt-BR') + ' às ' + agora.toLocaleTimeString('pt-BR');
+            formData.set('Data_Envio', dataFormatada);
+            // ---------------------------
+
             // AQUI ESTÁ O SEGREDO: Definimos a URL aqui no fetch
             fetch("https://formsubmit.co/ajax/cazuza.paiva@gmail.com", {
                 method: "POST",
@@ -186,11 +193,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (inputsDiv && msgDiv) {
                         inputsDiv.style.display = 'none';
-                        msgDiv.style.display = 'block';
+                        // EM VEZ DE 'block', USAMOS A CLASSE FLEX DO CSS
+                        msgDiv.style.display = 'flex';
+                        msgDiv.classList.add('active-flex'); // Garante alinhamento
+
+                        // Se precisar forçar a altura igual estava antes (opcional)
+                        msgDiv.style.minHeight = '480px';
+                        msgDiv.style.flexDirection = 'column';
+                        msgDiv.style.justifyContent = 'center';
+                        msgDiv.style.alignItems = 'center';
                     }
                     submitBtn.classList.remove('btn-loading');
                     submitBtn.innerText = originalBtnText;
                 })
+
                 .catch(error => {
                     console.error("Erro:", error);
                     alert("Erro ao enviar. Verifique o tamanho do arquivo (Max 5MB) e sua conexão.");
@@ -251,5 +267,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPrivacidade = document.getElementById('btnPrivacidade'); if (btnPrivacidade) btnPrivacidade.addEventListener('click', (e) => { e.preventDefault(); openModal(document.getElementById('modalPrivacidade')); });
     const btnSobreFooter = document.getElementById('btnSobreFooter'); if (btnSobreFooter) btnSobreFooter.addEventListener('click', (e) => { e.preventDefault(); openModal(document.getElementById('modalSobre')); });
     const btnSobreNav = document.getElementById('btnSobreNav'); if (btnSobreNav) btnSobreNav.addEventListener('click', (e) => { e.preventDefault(); openModal(document.getElementById('modalSobre')); });
+
+    // Voltar ao Topo
+    const backToTopBtn = document.getElementById('backToTop');
+
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            // Se rolar mais de 300px, mostra o botão
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 
 });
