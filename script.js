@@ -111,11 +111,14 @@ document.addEventListener('DOMContentLoaded', () => {
             } else { clearError(telefone); }
 
             // 5. Validação Mensagem
-            if (mensagem.value.trim().length < 200) {
-                showError(mensagem, "*Mínimo de 200 caracteres");
+            if (mensagem.value.trim().length < 20) {
+                showError(mensagem, "*Mínimo de 20 caracteres");
                 isValid = false;
                 if (!firstInvalidInput) firstInvalidInput = mensagem;
-            } else { clearError(mensagem); }
+            } else {
+
+                clearError(mensagem);
+            }
 
             if (!isValid) {
                 if (firstInvalidInput) {
@@ -147,8 +150,9 @@ document.addEventListener('DOMContentLoaded', () => {
             msgInput.addEventListener('input', function () {
                 const len = this.value.length;
                 charCountDisplay.textContent = `${len} / 1000`;
-                if (len >= 200) {
-                    charCountDisplay.style.color = "#27c93f";
+
+                if (len >= 20) { // Alterado aqui também
+                    charCountDisplay.style.color = "#27c93f"; // Verde
                     clearError(this);
                 } else {
                     charCountDisplay.style.color = "#ffbd2e";
