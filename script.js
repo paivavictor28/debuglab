@@ -124,26 +124,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!form) return;
 
         form.addEventListener('submit', function (e) {
-            e.preventDefault();
+            e.preventDefault(); // BLOQUEIO IMEDIATO DO REDIRECT
+
+            // 1. Preencher a Data Oculta IMEDIATAMENTE
+            const hiddenDate = form.querySelector('input[name="Data_Envio"]');
+            if (hiddenDate) {
+                const agora = new Date();
+                hiddenDate.value = agora.toLocaleDateString('pt-BR') + ' às ' + agora.toLocaleTimeString('pt-BR');
+            }
 
             let isValid = true;
             let firstInvalidInput = null;
 
-            // --- COLETA E VALIDAÇÃO ---
+            // --- VALIDAÇÕES ---
             const nome = form.querySelector('#nome');
             const email = form.querySelector('#email');
             const telefone = form.querySelector('#telefone');
 
-            // Validações Comuns
             if (!validators.nome(nome.value)) { showError(nome, "*Digite nome e sobrenome"); isValid = false; if (!firstInvalidInput) firstInvalidInput = nome; }
             if (!validators.email(email.value)) { showError(email, "*E-mail inválido"); isValid = false; if (!firstInvalidInput) firstInvalidInput = email; }
 
-            // Telefone
+            // Fix do Telefone: Verifica se o DDI existe na página, se não, usa +55
             const ddiEl = form.querySelector('.ddi-select') || document.getElementById('ddi');
             const ddiVal = ddiEl ? ddiEl.value : '+55';
             if (!validatePhone(telefone.value, ddiVal)) { showError(telefone, "*Telefone incompleto"); isValid = false; if (!firstInvalidInput) firstInvalidInput = telefone; }
 
-            // Validações Específicas
             if (isContact) {
                 const empresa = form.querySelector('#empresa');
                 const mensagem = form.querySelector('#mensagem');
@@ -153,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const linkedin = form.querySelector('#linkedin');
                 const perfil = form.querySelector('#perfil');
                 const cv = form.querySelector('#cv');
-                if (!validators.linkedin(linkedin.value)) { showError(linkedin, "*Link inválido (deve conter linkedin.com)"); isValid = false; if (!firstInvalidInput) firstInvalidInput = linkedin; }
+                if (!validators.linkedin(linkedin.value)) { showError(linkedin, "*Link inválido (LinkedIn)"); isValid = false; if (!firstInvalidInput) firstInvalidInput = linkedin; }
                 if (!validators.notEmpty(perfil.value)) { showError(perfil, "*Selecione sua stack"); isValid = false; if (!firstInvalidInput) firstInvalidInput = perfil; }
                 if (!validators.pdf(cv)) { showError(cv, "*Anexe PDF"); isValid = false; if (!firstInvalidInput) firstInvalidInput = cv; }
             }
@@ -163,52 +168,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // --- ENVIO ---
-
-            // 1. Data Oculta
-            const hiddenDate = form.querySelector('input[name="Data_Envio"]');
-            if (hiddenDate) {
-                hiddenDate.value = new Date().toLocaleString('pt-BR');
-            }
-
-            // 2. Loading State
+            // --- PROCESSO DE ENVIO ---
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerText;
 
-            submitBtn.classList.add('btn-loading');
+            submitBtn.classList.add('btn-loading'); // Ativa o spinner que criamos no CSS
             submitBtn.disabled = true;
 
-            // 3. FormData (Obrigatório para arquivos e dados complexos)
             const formData = new FormData(form);
 
-            // 4. Fetch
-            fetch("https://formsubmit.co/ajax/cazuza.paiva@gmail.com", {
+            fetch(form.action, {
                 method: "POST",
-                body: formData
+                body: formData,
+                headers: { 'Accept': 'application/json' }
             })
-                .then(response => response.json())
+                .then(response => response.ok ? response.json() : Promise.reject())
                 .then(data => {
                     // SUCESSO!
                     const inputsDiv = document.getElementById(inputsId);
                     const msgDiv = document.getElementById(msgId);
 
                     if (inputsDiv && msgDiv) {
-                        inputsDiv.style.display = 'none'; // Some o formulário
-                        msgDiv.style.display = 'block';   // Mostra a mensagem
+                        inputsDiv.style.display = 'none';
+                        msgDiv.style.display = 'block';
                     }
-
-                    // Remove Loading (só por limpeza, pois o botão já sumiu junto com o form)
                     submitBtn.classList.remove('btn-loading');
-                    submitBtn.innerText = originalBtnText;
-
-                    // IMPORTANTE: NÃO HÁ MAIS SETTIMEOUT AQUI.
-                    // A mensagem fica fixa até o usuário dar F5.
                 })
                 .catch(error => {
                     console.error("Erro:", error);
-                    alert("Ocorreu um erro no envio. Verifique sua conexão.");
-
-                    // Erro: Destrava para tentar de novo
+                    alert("Erro ao enviar. Verifique o tamanho do PDF (máx 5MB) ou sua conexão.");
                     submitBtn.classList.remove('btn-loading');
                     submitBtn.innerText = originalBtnText;
                     submitBtn.disabled = false;
