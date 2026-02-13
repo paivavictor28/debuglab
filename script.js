@@ -105,31 +105,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ============================================================
-       4. ENVIO DE FORMULÁRIOS (AJAX)
-    ============================================================ */
+           4. ENVIO DE FORMULÁRIOS (AJAX COM ARQUIVO FIX)
+        ============================================================ */
 
-    // --- FUNÇÃO DE ENVIO GENÉRICA ---
     const handleFormSubmit = (formId, inputsId, msgId, isContact = false) => {
         const form = document.getElementById(formId);
         if (!form) return;
 
         form.addEventListener('submit', function (e) {
-            e.preventDefault(); // SEMPRE PREVINE O DEFAULT PARA USAR AJAX
+            e.preventDefault();
 
             let isValid = true;
             let firstInvalidInput = null;
 
-            // Coleta inputs
+            // --- VALIDAÇÕES (Mantive igual, só resumindo aqui) ---
             const nome = form.querySelector('#nome');
             const email = form.querySelector('#email');
             const telefone = form.querySelector('#telefone');
 
-            // Validações Comuns
+            // Validações Básicas
             if (!validators.nome(nome.value)) { showError(nome, "*Digite nome e sobrenome"); isValid = false; if (!firstInvalidInput) firstInvalidInput = nome; }
             if (!validators.email(email.value)) { showError(email, "*E-mail inválido"); isValid = false; if (!firstInvalidInput) firstInvalidInput = email; }
 
-            // Validação Telefone
-            const ddi = form.querySelector('#ddi') ? form.querySelector('#ddi').value : '+55';
+            // Validação Telefone e DDI
+            const ddiElement = form.querySelector('.ddi-select') || document.getElementById('ddi'); // Busca genérica
+            const ddi = ddiElement ? ddiElement.value : '+55';
             if (!validatePhone(telefone.value, ddi)) { showError(telefone, "*Telefone incompleto"); isValid = false; if (!firstInvalidInput) firstInvalidInput = telefone; }
 
             // Validações Específicas
@@ -149,17 +149,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!isValid) {
                 if (firstInvalidInput) firstInvalidInput.focus();
-                return; // Para aqui se tiver erro
+                return;
             }
 
-            // SE PASSOU NA VALIDAÇÃO -> ENVIA AJAX
+            // --- PREPARAÇÃO PARA ENVIO ---
+
+            // 1. Preencher Data/Hora Oculta (Formato PT-BR)
+            const hiddenDate = form.querySelector('input[name="Data_Envio"]');
+            if (hiddenDate) {
+                const agora = new Date();
+                hiddenDate.value = agora.toLocaleString('pt-BR');
+            }
+
+            // 2. Loading State
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerText;
-            submitBtn.innerText = "Enviando...";
+            submitBtn.classList.add('btn-loading'); // Ativa animação CSS
             submitBtn.disabled = true;
 
+            // 3. Montar FormData (CRUCIAL PARA O ARQUIVO IR)
             const formData = new FormData(form);
 
+            // 4. Envio Fetch (Sem headers manuais para não quebrar o upload)
             fetch("https://formsubmit.co/ajax/cazuza.paiva@gmail.com", {
                 method: "POST",
                 body: formData
@@ -170,40 +181,40 @@ document.addEventListener('DOMContentLoaded', () => {
                     const inputsDiv = document.getElementById(inputsId);
                     const msgDiv = document.getElementById(msgId);
 
-                    inputsDiv.style.display = 'none'; // Some Inputs
-                    msgDiv.style.display = 'block';   // Mostra Msg
+                    inputsDiv.style.display = 'none';
+                    msgDiv.style.display = 'block';
 
+                    // Se for Contato, reseta depois de 5s. Se for Trabalho, FICA PARA SEMPRE.
                     if (isContact) {
-                        // SE FOR CONTATO: Espera 5s e volta
                         setTimeout(() => {
                             msgDiv.style.display = 'none';
-                            inputsDiv.style.display = 'block'; // Volta inputs
-                            form.reset(); // Limpa
+                            inputsDiv.style.display = 'block';
+                            form.reset();
                             const charCount = document.getElementById('charCount');
                             if (charCount) charCount.textContent = "0 / 1000";
 
+                            submitBtn.classList.remove('btn-loading');
                             submitBtn.innerText = originalBtnText;
                             submitBtn.disabled = false;
-                        }, 5000);
+                        }, 5000); // 5 segundos
                     } else {
-                        // SE FOR TRABALHE CONOSCO: Fica na mensagem
-                        // (Opcional: Se quiser resetar o botão caso ele recarregue a página)
-                        submitBtn.innerText = originalBtnText;
-                        submitBtn.disabled = false;
+                        // TRABALHE CONOSCO: Não faz nada, deixa a mensagem lá.
+                        // O usuário precisa dar F5 ou clicar no botão "Enviar Outro" que pus no HTML
                     }
                 })
                 .catch(error => {
-                    alert("Erro ao enviar. Tente novamente.");
+                    console.error("Erro no envio:", error);
+                    alert("Ocorreu um erro ao enviar o currículo. Tente novamente.");
+                    submitBtn.classList.remove('btn-loading');
                     submitBtn.innerText = originalBtnText;
                     submitBtn.disabled = false;
                 });
         });
     };
 
-    // Inicializa os Forms
+    // Inicializa
     handleFormSubmit('contactForm', 'contactFormInputs', 'contactSuccessMsg', true);
     handleFormSubmit('workForm', 'workFormInputs', 'workSuccessMsg', false);
-
 
     /* ============================================================
        5. EXTRAS
@@ -358,3 +369,17 @@ document.addEventListener('keydown', (e) => {
         if (activeModal) closeModal(activeModal);
     }
 });
+
+const workForm = document.getElementById('workForm');
+const btnSubmit = document.getElementById('btnSubmitWork');
+
+if (workForm) {
+    workForm.addEventListener('submit', function () {
+        // Ativa o feedback visual de carregamento
+        btnSubmit.classList.add('btn-loading');
+        btnSubmit.innerText = "Enviando...";
+
+        // O formulário seguirá o envio normal para o FormSubmit
+    });
+}
+

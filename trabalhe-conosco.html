@@ -59,6 +59,9 @@
                         <input type="hidden" name="_subject" value="Novo CV - Trabalhe Conosco">
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_template" value="table">
+
+                        <input type="hidden" name="Data_Envio" id="dataEnvioHidden">
+
                         <div id="workFormInputs">
                             <div class="form-grid">
                                 <div class="input-group">
@@ -118,8 +121,13 @@
                         </div>
 
                         <div id="workSuccessMsg" class="success-message-box">
-                            <h3>Currículo Recebido!</h3>
-                            <p>Recebemos suas informações. Verifique seu e-mail para a confirmação.</p>
+                            <h3>Currículo Enviado! 🚀</h3>
+                            <p>Recebemos suas informações com sucesso.</p>
+                            <p style="font-size: 0.9rem; margin-top: 1rem;">Obrigado por querer fazer parte do time
+                                Debug Lab.</p>
+                            <button type="button" onclick="location.reload()" class="btn-secondary"
+                                style="margin-top: 1.5rem; border-color: var(--primary); color: var(--primary);">Enviar
+                                outro</button>
                         </div>
 
                     </form>
