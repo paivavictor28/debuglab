@@ -20,4 +20,4 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         server-dir: ./public_html/  # Caminho padrão na HostGator1
-        port: 21 # forçar 
+        port: 21 
