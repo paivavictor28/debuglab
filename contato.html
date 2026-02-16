@@ -31,47 +31,68 @@
 
     <section class="contact-page">
         <div class="container">
-            <div class="contact-wrapper">
 
-                <div class="contact-text">
-                    <h1 data-lang="contact_title_page">Encontre o <br> <span class="gradient-text">Talento Certo.</span>
-                    </h1>
+            <div class="contact-header-text">
+                <h1 class="gradient-text">Vamos construir o futuro?</h1>
+                <p>Preencha o formulário para iniciarmos uma conversa sobre seus desafios técnicos.</p>
+            </div>
 
-                    <p data-lang="contact_sub_page"
-                        style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 2.5rem; max-width: 450px; line-height: 1.6;">
-                        Preencha o formulário e nossa equipe técnica entrará em contato em até 24h para entender sua
-                        stack e desafio.
-                    </p>
+            <div class="contact-main-grid">
 
-                    <div class="contact-info-cards">
-                        <div class="info-card">
-                            <div class="icon">📧</div>
-                            <div class="info-text">
-                                <h4 data-lang="label_email">E-mail</h4>
-                                <a href="mailto:contato@debuglab.com">contato@debuglab.com</a>
-                            </div>
+                <div class="contact-sidebar">
+
+                    <div class="info-sidebar-card">
+                        <div class="card-icon-row">
+                            <h4>Equipe Especializada</h4>
                         </div>
+                        <p>Nosso time é composto por seniores e especialistas. Conseguimos absorver o máximo de um
+                            candidato para que atenda as necessidades e exigências da vaga.</p>
 
-                        <div class="info-card">
-                            <div class="icon">📱</div>
-                            <div class="info-text">
-                                <h4 data-lang="label_whatsapp">WhatsApp</h4>
-                                <a href="https://wa.me/5561999999999" target="_blank">
-                                    +55 (61) 99999-9999
-                                </a>
-                            </div>
+                        <div class="team-avatars">
+                            <div class="avatar" style="background: #2563eb;"></div>
+                            <div class="avatar" style="background: #7c3aed;"></div>
+                            <div class="avatar" style="background: #db2777;"></div>
+                            <div class="avatar-plus">+6 Especialistas</div>
                         </div>
                     </div>
+
+                    <div class="info-sidebar-card next-steps">
+                        <h4>O que acontece depois?</h4>
+                        <ul>
+                            <li>
+                                <span class="step-num">1</span>
+                                Alinhamento com gestor da vaga
+                            </li>
+                            <li>
+                                <span class="step-num">2</span>
+                                Análise do perfil em 24h
+                            </li>
+                            <li>
+                                <span class="step-num">3</span>
+                                Triagem técnica inicial
+                            </li>
+                            <li>
+                                <span class="step-num">4</span>
+                                Live Coding
+                            </li>
+                            <li>
+                                <span class="step-num">5</span>
+                                Apresentação do candidato à gestão
+                            </li>
+                            <li>
+                                <span class="step-num">6</span>
+                                Feedback Transparente
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
 
                 <div class="glass-form-container">
-                    <form id="contactForm" novalidate>
-                        <input type="hidden" name="_subject" value="Novo Contato - Site Debug Lab">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_template" value="table">
-                        <input type="hidden" name="Data_Envio" id="dataEnvioHidden">
+                    <div id="contactFormInputs">
+                        <h3>Envie sua Mensagem</h3>
 
-                        <div id="contactFormInputs">
+                        <form id="contactForm" novalidate>
                             <div class="form-grid">
                                 <div class="input-group">
                                     <label for="nome">Seu Nome</label>
@@ -80,12 +101,12 @@
                                 </div>
                                 <div class="input-group">
                                     <label for="empresa">Nome da Empresa</label>
-                                    <input type="text" name="company" id="empresa" placeholder="Tech Solutions">
+                                    <input type="text" name="company" id="empresa" placeholder="Sua Empresa">
                                     <span class="error-msg"></span>
                                 </div>
                             </div>
 
-                            <div class="input-group full-width" style="margin-top: 1.5rem;">
+                            <div class="input-group full-width" style="margin-top: 1rem;">
                                 <label for="email">E-mail Corporativo</label>
                                 <input type="email" name="email" id="email" placeholder="nome@empresa.com">
                                 <span class="error-msg"></span>
@@ -104,31 +125,27 @@
                             </div>
 
                             <div class="input-group full-width">
-                                <label for="mensagem">Mensagem / Detalhes da Vaga</label>
-                                <textarea id="mensagem" name="message" rows="5" maxlength="1000"
-                                    placeholder="Conte um pouco sobre a stack técnica ou o desafio..."></textarea>
+                                <label for="mensagem">Como podemos ajudar?</label>
+                                <textarea id="mensagem" name="message" rows="4" maxlength="1000"
+                                    placeholder="Descreva seu desafio..."></textarea>
                                 <div id="charCount" class="char-counter">0 / 1000</div>
-                                <span class="error-msg">*Mínimo de 20 caracteres</span>
+                                <span class="error-msg"></span>
                             </div>
 
-                            <button type="submit" class="btn-primary full-width" id="btnSubmitContact">Solicitar
-                                Contato</button>
-                        </div>
+                            <button type="submit" class="btn-primary full-width" id="btnSubmitContact">Solicitar Contato
+                            </button>
+                        </form>
+                    </div>
 
-                        <div id="contactSuccessMsg" class="success-message-box">
-                            <h3>Mensagem Enviada! </h3>
-                            <p>Agradecemos o contato.</p>
-                            <p style="font-size: 0.9rem; margin-top: 1rem; color: #94a3b8;">
-                                Retornaremos o mais breve possível.
-                            </p>
-                        </div>
-
-                    </form>
+                    <div id="contactSuccessMsg" class="success-message-box">
+                        <h3>Mensagem Enviada!</h3>
+                        <p>Agradecemos o contato. Retornaremos em breve.</p>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
-
     <footer>
         <div class="container footer-content">
 
