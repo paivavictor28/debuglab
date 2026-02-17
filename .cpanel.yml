@@ -1,4 +1,0 @@
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home2/vict7766/public_html/
-    - /bin/cp -r * $DEPLOYPATH
