@@ -289,4 +289,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* ============================================================
+       6. ACCORDION (Perguntas Frequentes)
+    ============================================================ */
+    const accordions = document.querySelectorAll('.accordion-header');
+
+    accordions.forEach(acc => {
+        acc.addEventListener('click', function () {
+            // 1. Alterna a classe active para mudar a setinha/cor
+            this.classList.toggle('active');
+
+            // 2. Seleciona o conteúdo (o próximo elemento irmão)
+            const content = this.nextElementSibling;
+
+            // 3. Lógica de Slide (Abre/Fecha)
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null; // Fecha
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px"; // Abre
+            }
+        });
+    });
+
 });
