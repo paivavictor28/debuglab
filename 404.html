@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro 404 | Bug Detectado! 🐞</title>
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="refresh" content="8;url=index.html">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh; text-align: center;">
+
+    <div class="bg-grid"></div>
+
+    <div class="container">
+        <h1 class="gradient-text" style="font-size: 6rem; margin-bottom: 0;">404</h1>
+        <h2 style="color: #fff; margin-bottom: 1.5rem;">Parece que encontramos um Bug...</h2>
+        <p style="color: #94a3b8; margin-bottom: 2rem;">A página que você procura não foi encontrada ou foi movida para produção.</p>
+        
+        <div style="background: #000; padding: 20px; border-radius: 8px; font-family: monospace; border-left: 3px solid #e91e63; display: inline-block; margin-bottom: 2rem;">
+            <code style="color: #ff5f56;">// Stack trace: Error_Page_Not_Found</code><br>
+            <code style="color: #00bcd4;">Redirecting to Home in <span id="timer">5</span>s...</code>
+        </div>
+
+        <br>
+        <a href="index.html" class="btn-primary">Voltar para a Home agora</a>
+    </div>
+
+    <script>
+        // Script simples para o contador visual
+        let timeLeft = 5;
+        const timerElement = document.getElementById('timer');
+        setInterval(() => {
+            if(timeLeft > 0) {
+                timeLeft--;
+                timerElement.innerText = timeLeft;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

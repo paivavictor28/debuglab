@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Repositório de Assets | Debug Lab</title>
+    <style>
+        body { background: #0b0e14; color: #fff; font-family: sans-serif; padding: 20px; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .item { border: 1px solid #333; padding: 10px; text-align: center; }
+        img { max-width: 100%; border-radius: 8px; }
+        code { display: block; margin-top: 10px; font-size: 12px; color: #00bcd4; }
+    </style>
+</head>
+<body>
+    <h1>Vault de Imagens - Debug Lab</h1>
+    <div class="gallery">
+        <div class="item">
+            <img src="pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png" alt="Imagem Gemini">
+            <code>pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png</code>
+        </div>
+    </div>
+</body>
+</html>
