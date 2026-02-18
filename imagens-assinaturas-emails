@@ -2,22 +2,33 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Repositório de Assets | Debug Lab</title>
+    <title>Debug Lab | Assets Vault</title>
     <style>
-        body { background: #0b0e14; color: #fff; font-family: sans-serif; padding: 20px; }
-        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-        .item { border: 1px solid #333; padding: 10px; text-align: center; }
-        img { max-width: 100%; border-radius: 8px; }
-        code { display: block; margin-top: 10px; font-size: 12px; color: #00bcd4; }
+        body { background: #0b0e14; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
+        .item { background: #151921; border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; text-align: center; }
+        img { max-width: 100%; height: 150px; object-fit: contain; border-radius: 6px; margin-bottom: 10px; background: #000; }
+        input { width: 100%; background: #000; border: 1px solid #00bcd4; color: #00bcd4; padding: 5px; font-size: 10px; margin-bottom: 10px; border-radius: 4px; }
+        .btn-copy { background: #00bcd4; color: #000; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
     </style>
 </head>
 <body>
-    <h1>Vault de Imagens - Debug Lab</h1>
+    <h1>Assets para Assinaturas e E-mails</h1>
     <div class="gallery">
         <div class="item">
-            <img src="pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png" alt="Imagem Gemini">
-            <code>pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png</code>
+            <img src="pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png" alt="Logo Assinatura">
+            <input type="text" value="https://debughunting.com.br/pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png" readonly id="link1">
+            <button class="btn-copy" onclick="copyLink('link1')">Copiar Link</button>
         </div>
     </div>
+
+    <script>
+        function copyLink(id) {
+            const copyText = document.getElementById(id);
+            copyText.select();
+            document.execCommand("copy");
+            alert("Link copiado: " + copyText.value);
+        }
+    </script>
 </body>
 </html>
