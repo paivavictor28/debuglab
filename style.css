@@ -419,24 +419,25 @@ footer { background: #080a0f; padding: 3rem 0 1.5rem 0; border-top: 1px solid va
 }
 
 /* ============================================================
-   CORREÇÃO DE RESPONSIVIDADE (HOTFIX IPHONE)
+   CORREÇÃO DE RESPONSIVIDADE (HOTFIX IPHONE - VERSÃO SEGURA)
+   Só aplica essas regras se a tela for menor que 768px
 ============================================================ */
-* {
-    box-sizing: border-box;
-}
+@media screen and (max-width: 768px) {
+    
+    html, body {
+        width: 100%;
+        overflow-x: hidden; /* Evita rolagem lateral no iPhone */
+    }
 
-html, body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; 
-}
+    /* Garante que nada estoure a largura da tela NO MOBILE */
+    .container, section, div, img {
+        max-width: 100%;
+    }
 
-.container, section, div, img {
-    max-width: 100% !important;
-}
-
-.card, .servico-item {
-    width: auto !important;
-    margin: 10px 15px !important; 
+    /* Ajuste específico para os cards APENAS no mobile */
+    .card, .servico-item, .bento-card {
+        width: auto !important;
+        margin-left: 15px !important;
+        margin-right: 15px !important;
+    }
 }

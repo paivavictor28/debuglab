@@ -329,3 +329,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// ==========================================
+// REMOVE .html DA URL VISUALMENTE
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Pega o caminho atual (ex: /contato.html)
+    const path = window.location.pathname;
+    
+    // Se terminar com .html, remove a extensão apenas visualmente
+    if (path.endsWith('.html')) {
+        const newPath = path.slice(0, -5); // Remove os últimos 5 caracteres (.html)
+        window.history.replaceState(null, '', newPath);
+    }
+});
