@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // ---------------------------
 
             // AQUI ESTÁ O SEGREDO: Definimos a URL aqui no fetch
-            fetch("https://formsubmit.co/ajax/cazuza.paiva@gmail.com", {
+            fetch("https://formsubmit.co/ajax/contato@debughunting.com.br", {
                 method: "POST",
                 body: formData,
                 headers: {
