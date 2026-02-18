@@ -417,3 +417,26 @@ footer { background: #080a0f; padding: 3rem 0 1.5rem 0; border-top: 1px solid va
         margin-bottom: 0.5rem;
     }
 }
+
+/* ============================================================
+   CORREÇÃO DE RESPONSIVIDADE (HOTFIX IPHONE)
+============================================================ */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+}
+
+.container, section, div, img {
+    max-width: 100% !important;
+}
+
+.card, .servico-item {
+    width: auto !important;
+    margin: 10px 15px !important; 
+}
