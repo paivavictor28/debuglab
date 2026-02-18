@@ -441,3 +441,35 @@ footer { background: #080a0f; padding: 3rem 0 1.5rem 0; border-top: 1px solid va
         margin-right: 15px !important;
     }
 }
+
+/* ============================================================
+   HOTFIX FINAL: FORÇAR COLUNA ÚNICA NO MOBILE
+   ============================================================ */
+@media screen and (max-width: 900px) {
+    
+    /* Força o Grid a ter apenas 1 coluna (um card embaixo do outro) */
+    .bento-grid, .contact-main-grid, .form-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
+    /* Garante que o card ocupe a largura toda e tenha respiro */
+    .bento-card, .info-sidebar-card, .glass-form-container {
+        width: 100% !important;
+        margin: 0 0 20px 0 !important; /* Espaço embaixo de cada card */
+        max-width: 100% !important;
+    }
+
+    /* Ajusta o container para não cortar o conteúdo nas bordas */
+    .container {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        width: 100% !important;
+    }
+
+    /* Seção Hero (textos) também precisa de ajuste */
+    .hero h1 {
+        font-size: 2rem !important; /* Diminui a fonte do título */
+    }
+}
