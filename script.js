@@ -310,5 +310,36 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    // Captura cliques em links que apontam para IDs na mesma página
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
 
+            // Se for apenas "#", ignora (caso do botão Sobre)
+            if (targetId === "#") return;
+
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                // Remove o # da URL sem dar refresh
+                window.history.pushState(null, null, window.location.pathname);
+            }
+        });
+    });
+});
+
+// ==========================================
+// REMOVE .html DA URL VISUALMENTE
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Pega o caminho atual (ex: /contato.html)
+    const path = window.location.pathname;
+    
+    // Se terminar com .html, remove a extensão apenas visualmente
+    if (path.endsWith('.html')) {
+        const newPath = path.slice(0, -5); // Remove os últimos 5 caracteres (.html)
+        window.history.replaceState(null, '', newPath);
+    }
 });
