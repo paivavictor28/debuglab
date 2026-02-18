@@ -2,41 +2,11 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo | Debug Lab Assets</title>
-    <style>
-        body { 
-            background-color: #0b0e14; 
-            color: white; 
-            font-family: 'Inter', sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            margin: 0; 
-        }
-        h1 { color: #00bcd4; margin-bottom: 20px; }
-        .card { 
-            background: #151921; 
-            padding: 20px; 
-            border-radius: 12px; 
-            border: 1px solid #00bcd4; 
-            text-align: center;
-        }
-        img { max-width: 300px; border-radius: 8px; display: block; margin: 0 auto 15px; }
-        code { background: #000; padding: 5px; color: #00bcd4; font-size: 12px; }
-    </style>
+    <title>Debug Lab Vault</title>
 </head>
 <body>
-
-    <h1>Bem-vindo ao Repositório Debug Lab</h1>
-    
-    <div class="card">
-        <img src="pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png" alt="Assinatura Victor Paiva">
-        <p>Link para cópia:</p>
-        <code>https://debughunting.com.br/pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png</code>
-    </div>
-
+    <h1>Imagens Debug Lab</h1>
+    <img src="pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png" style="max-width:300px;">
+    <p>Link: https://debughunting.com.br/pictures/Gemini_Generated_Image_jqff4yjqff4yjqff.png</p>
 </body>
 </html>
