@@ -69,11 +69,21 @@ nav a:hover, nav a.active { color: var(--primary); }
     font-weight: 600; transition: 0.3s;
 }
 
+.btn-primary:hover, a.btn-primary:hover {
+    color: #000000 !important; /* Força o texto a ficar preto no hover */
+    opacity: 1; /* Garante que não fique transparente */
+}
+
 /* ============================================================
    3. SEÇÕES COMUNS (Hero, Marquee, Bento, Footer)
    ============================================================ */
 .hero { text-align: center; padding: 6rem 0; }
 .hero h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; }
+.hero p {
+    margin-bottom: 2.5rem; /* Empurra o botão para baixo */
+    color: var(--text-muted); /* Garante que a cor esteja certa */
+    font-size: 1.1rem; /* Um leve ajuste de legibilidade se quiser */
+}
 
 .gradient-text {
     background: linear-gradient(90deg, var(--primary), var(--secondary));
@@ -336,12 +346,74 @@ footer { background: #080a0f; padding: 3rem 0 1.5rem 0; border-top: 1px solid va
 }
 
 @media (max-width: 768px) {
-    .container { padding: 0 1.5rem; }
-    .header-content { flex-direction: column; gap: 1rem; }
-    nav { gap: 1rem; flex-wrap: wrap; justify-content: center; }
-    .logo img { width: 150px; }
-    .hero h1 { font-size: 2.2rem; }
-    .bento-grid { grid-template-columns: 1fr !important; }
-    .footer-content { grid-template-columns: 1fr !important; text-align: center; }
-    .brand-row { justify-content: center; }
+    /* 1. Container segura o conteúdo dentro da tela */
+    .container { 
+        padding: 0 1.5rem; 
+        width: 100%;
+        overflow-x: hidden; /* Evita rolagem lateral */
+    }
+
+    /* 2. Header: Remove o sticky e ajusta altura */
+    header {
+        position: relative; 
+        height: auto;
+        padding: 1rem 0;
+    }
+
+    .header-content { 
+        flex-direction: column; 
+        gap: 1.5rem; 
+    }
+
+    /* 3. Ajuste do Menu (Links empilhados) */
+    nav { 
+        flex-direction: column; 
+        gap: 1rem; 
+        width: 100%;
+        text-align: center;
+    }
+
+    nav a {
+        display: block; 
+        padding: 0.5rem;
+        width: 100%; /* Área de clique maior */
+    }
+
+    /* 4. Hero: Ajuste de fonte */
+    .hero {
+        padding: 3rem 0; 
+    }
+
+    .hero h1 { 
+        font-size: 2rem; 
+        line-height: 1.2;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+        margin-bottom: 2rem; 
+    }
+
+    /* 5. Bento Grid e Footer em coluna única */
+    .bento-grid { 
+        grid-template-columns: 1fr !important; 
+        gap: 1.5rem;
+    }
+
+    .footer-content { 
+        grid-template-columns: 1fr !important; 
+        text-align: center; 
+        gap: 2.5rem;
+    }
+
+    .brand-row { 
+        justify-content: center; 
+    }
+    
+    /* 6. Botões largura total no mobile */
+    .btn-primary, .btn-secondary {
+        width: 100%; 
+        display: block;
+        margin-bottom: 0.5rem;
+    }
 }
